@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct BreweryDetailView: View {
+    
+    @State var breweryId: String
+    
+    // SOME state property of brewery details
+    // which will be of type BreweryDetail
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("\(breweryId)")
+            // some front end work to nicely show the brewery details
+        }
+        .onAppear {
+            // call some api manager method passing in the brewery id
+            // use a completion handler to set the brewery detail of this view
+        }
     }
 }
 
 #Preview {
-    BreweryDetailView()
+    BreweryDetailView(breweryId: "windsor")
 }

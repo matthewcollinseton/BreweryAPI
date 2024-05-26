@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct ApiResult: Codable {
+    let id: String
+    let name: String
+}

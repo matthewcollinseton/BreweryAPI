@@ -8,14 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var search: String = ""
+    @State private var results: [ApiResult] = []
+    
+    @ObservedObject var apiManager = ApiManager.shared
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        NavigationStack {
+            TextField("Enter search item", text: $search)
+                .onChange(of: search) { oldValue, newValue in
+                    print("New value is: \(newValue)")
+                    apiManager.searchFor(query: newValue) { results in
+                        self.results = results
+                    }
+                }
+            
+            Text("Api Results:")
+            
+            List {
+                ForEach(results, id:\.id) { result in
+                    NavigationLink("\(result.name)") {
+                        BreweryDetailView(breweryId: result.id)
+                    }
+                }
+            }
+            .navigationTitle("Brewery API")
         }
-        .padding()
     }
 }
 
